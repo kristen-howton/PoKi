@@ -3,13 +3,24 @@ SELECT name FROM Grade
 --What emotions may be associated with a poem?
 SELECT name FROM Emotion
 --How many poems are in the database?
-SELECT SUM(Title)
+SELECT COUNT(Title)
 Title
 FROM Poem
-WHERE 
 --Sort authors alphabetically by name. What are the names of the top 76 authors?
+SELECT TOP 76
+Name
+FROM Author
+ORDER BY Name
 --Starting with the above query, add the grade of each of the authors.
+SELECT TOP 76
+Name, GradeId
+FROM Author
+ORDER BY Name
 --Starting with the above query, add the recorded gender of each of the authors.
+SELECT TOP 76
+Name, GradeId, GenderId
+FROM Author
+ORDER BY Name
 --What is the total number of words in all poems in the database?
 --Which poem has the fewest characters?
 --How many authors are in the third grade?
