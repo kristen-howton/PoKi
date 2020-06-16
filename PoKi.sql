@@ -27,8 +27,12 @@ ORDER BY a.Name
 SELECT SUM(WordCount) AS 'Total Number of Words'
 FROM Poem 
 --8. Which poem has the fewest characters?
-SELECT MIN(CharCount) AS 'Minumum Character Count'
-FROM Poem
+SELECT p.Title, p.CharCount 
+FROM Poem p
+WHERE p.CharCount = (
+    SELECT MIN(CharCount) 
+    FROM Poem
+    )
 --9. How many authors are in the third grade?
 SELECT COUNT(g.Name)
 FROM Author a
@@ -40,10 +44,29 @@ FROM Author a
 JOIN Grade g ON a.GradeId = g.Id
 WHERE g.Name = '3rd Grade' OR g.Name = '2nd Grade' OR g.Name = '1st Grade'
 --11. What is the total number of poems written by fourth graders?
-
+SELECT COUNT(p.Title) AS 'Poems by Fourth Grades'
+FROM Poem p
+JOIN Author a ON p.AuthorId = a.Id
+JOIN Grade g ON g.Id = a.GradeId
+WHERE g.Name = '4th Grade'
 --12. How many poems are there per grade?
+SELECT g.Name, COUNT(p.Title) AS 'Total Poems'
+FROM Poem p
+JOIN Author a ON p.AuthorId = a.Id
+JOIN Grade g ON g.Id = a.GradeId 
+GROUP BY g.Name 
 --13. How many authors are in each grade? (Order your results by grade starting with 1st Grade)
+SELECT g.Name AS 'Grade', COUNT(p.Title) AS 'Total Poems'
+FROM Poem p
+JOIN Author a ON p.AuthorId = a.Id
+JOIN Grade g ON g.Id = a.GradeId 
+GROUP BY g.Name 
 --14. What is the title of the poem that has the most words?
+SELECT p.Title, p.WordCount
+FROM Poem p
+WHERE p.WordCount = (
+    SELECT MAX(WordCount)
+    FROM Poem p
 --15. Which author(s) have the most poems? (Remember authors can have the same name.)
 --16. How many poems have an emotion of sadness?
 --17. How many poems are not associated with any emotion?
